@@ -38,10 +38,12 @@ describe('Rotas de livros', () => {
             autor_id: 3,
             editora_id: 4
         }))
-
     })
 
-    test.todo('POST /livros com body vazio → 400')
+    test('POST /livros com body vazio → 400', async() => {
+        const res = await request(app).post('/livros').send();
+        expect(res.status).toBe(404);
+    })
     test.todo('POST /livros com editora_id inexistente (999) → 400')
     test.todo('POST /livros com autor_id inexistente (999) → 400')
     test.todo('POST /livros com editora_id inexistente (999) → **400')
