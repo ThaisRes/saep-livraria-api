@@ -44,7 +44,17 @@ describe('Rotas de livros', () => {
         const res = await request(app).post('/livros').send();
         expect(res.status).toBe(404);
     })
-    test.todo('POST /livros com editora_id inexistente (999) → 400')
+
+    test('POST /livros com editora_id inexistente (999) → 400', async() => {
+        const res = await request(app).post('/livros').send({
+            titulo: 'O Alienista',
+            paginas: 208,
+            autor_id: 3,
+            editora_id: 999
+        });
+        expect(res.status).toBe(400);
+    })
+    
     test.todo('POST /livros com autor_id inexistente (999) → 400')
     test.todo('POST /livros com editora_id inexistente (999) → **400')
     test.todo('POST /livros com paginas = 0 → **400')
