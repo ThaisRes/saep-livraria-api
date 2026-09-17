@@ -7,7 +7,11 @@ beforeEach(resetarBanco);
 afterAll(fecharBanco);
 
 describe('Rotas de livros', () => {
-    test.todo('GET /livros → 200 e 5 livros')
+    test('GET /livros → 200 e 5 livros', async() => {
+        const res = await request(app).get('/livros');
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveLength(5);
+    })
     test.todo('GET /livros/1 → 200, titulo = "O Hobbit"')
     test.todo('GET /livros/999 → 404')
     test.todo('POST /livros válido (titulo, paginas ≥ 1, autor_id e editora_id existentes) → 201 com id no corpo')
