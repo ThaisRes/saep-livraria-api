@@ -20,6 +20,9 @@ export async function mostrarLivro(req: Request, res: Response): Promise<void> {
 export async function criarLivro(req: Request, res: Response): Promise<void> {
   const dados = req.body as Partial<Livro>;
   const livro = livros().create(dados);
+  if(!dados){
+    res.status(404).json({erro: 'Os dados do livro devem ser informados.'})
+  }
   await livros().save(livro);
   res.status(201).json(livro);
 }
