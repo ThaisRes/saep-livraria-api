@@ -12,13 +12,35 @@ describe('Rotas de livros', () => {
         expect(res.status).toBe(200);
         expect(res.body).toHaveLength(5);
     })
+
     test('GET /livros/1 → 200, titulo = "O Hobbit"', async() => {
         const res = await request(app).get('/livros/1');
         expect(res.status).toBe(200);
         expect(res.body.titulo).toBe('O Hobbit')
     })
-    test.todo('GET /livros/999 → 404')
-    test.todo('POST /livros válido (titulo, paginas ≥ 1, autor_id e editora_id existentes) → 201 com id no corpo')
+
+    test('GET /livros/999 → 404', async() => {
+        const res = await request(app).get('/livros/999');
+        expect(res.status).toBe(404);
+    })
+
+    test('POST /livros válido (titulo, paginas ≥ 1, autor_id e editora_id existentes) → 201 com id no corpo', async() => {
+        const res = await request(app).post('/livros').send({
+            titulo: 'Dom Casmurro',
+            paginas: 208,
+            autor_id: 3,
+            editora_id: 4
+        });
+        expect(res.status).toBe(201);
+        expect(res.body).toEqual(expect.objectContaining({
+            titulo: 'Dom Casmurro',
+            paginas: 208,
+            autor_id: 3,
+            editora_id: 4
+        }))
+
+    })
+
     test.todo('POST /livros com body vazio → 400')
     test.todo('POST /livros com editora_id inexistente (999) → 400')
     test.todo('POST /livros com autor_id inexistente (999) → 400')
