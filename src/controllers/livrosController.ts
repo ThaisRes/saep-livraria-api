@@ -27,10 +27,11 @@ export async function criarLivro(req: Request, res: Response): Promise<void> {
   if(!dados){
     res.status(404).json({erro: 'Os dados do livro devem ser informados.'})
   };
+  
   if(!dados.paginas || dados.paginas <= 0){
     res.status(400).json({erro: 'O número de páginas deve ser maior que zero'})
   }
-  
+
   const autorID = await autores().findOneBy({id: Number(dados.autor_id)});
   if(!autorID){
     res.status(400).json({erro: 'Autor não cadastrado'})

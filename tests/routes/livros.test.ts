@@ -90,7 +90,11 @@ describe('Rotas de livros', () => {
         expect(res.status).toBe(200);
     })
 
-    test.todo('PUT /livros/999 → 404')
+    test('PUT /livros/999 → 404', async () => {
+        const res = await request(app).put('/livros/999').send({paginas: 200});
+        expect(res.status).toBe(404);
+    })
+    
     test.todo('DELETE /livros/5 → 204')
     test.todo('DELETE /livros/999 → 404')
     test.todo('GET /editoras/2/livros → os livros da editora 2')
