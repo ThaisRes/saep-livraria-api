@@ -90,13 +90,21 @@ describe('Rotas de livros', () => {
         expect(res.status).toBe(200);
     })
 
-    test('PUT /livros/999 → 404', async () => {
+    test('PUT /livros/999 → 404', async() => {
         const res = await request(app).put('/livros/999').send({paginas: 200});
         expect(res.status).toBe(404);
     })
+
+    test('DELETE /livros/5 → 204', async() => {
+        const res = await request(app).delete('/livros/5');
+        expect(res.status).toBe(204);
+    })
     
-    test.todo('DELETE /livros/5 → 204')
-    test.todo('DELETE /livros/999 → 404')
+    test('DELETE /livros/999 → 404', async() => {
+        const res = await request(app).delete('/livros/999');
+        expect(res.status).toBe(404);
+    })
+
     test.todo('GET /editoras/2/livros → os livros da editora 2')
     test.todo('POST /livros para a editora 2 e, em seguida, GET /editoras/2/livros → a lista cresce em 1 e inclui o novo livro')
 })
