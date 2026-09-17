@@ -84,7 +84,12 @@ describe('Rotas de livros', () => {
         })
         expect(res.status).toBe(400);
     })
-    test.todo('PUT /livros/1 ({ paginas }) → 200')
+
+    test('PUT /livros/1 ({ paginas }) → 200', async () => {
+        const res = await request(app).put('/livros/1').send({paginas: 200});
+        expect(res.status).toBe(200);
+    })
+
     test.todo('PUT /livros/999 → 404')
     test.todo('DELETE /livros/5 → 204')
     test.todo('DELETE /livros/999 → 404')
