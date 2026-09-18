@@ -99,12 +99,28 @@ describe('Rotas de livros', () => {
         const res = await request(app).delete('/livros/5');
         expect(res.status).toBe(204);
     })
-    
+
     test('DELETE /livros/999 → 404', async() => {
         const res = await request(app).delete('/livros/999');
         expect(res.status).toBe(404);
     })
 
-    test.todo('GET /editoras/2/livros → os livros da editora 2')
-    test.todo('POST /livros para a editora 2 e, em seguida, GET /editoras/2/livros → a lista cresce em 1 e inclui o novo livro')
+    test('GET /editoras/2/livros → os livros da editora 2', async() => {
+        const res = await request(app).get('/editoras/2/livros');
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveLength(1);
+    })
+
+    test('POST /livros para a editora 2 e, em seguida, GET /editoras/2/livros → a lista cresce em 1 e inclui o novo livro', async() => {
+        await request(app).post('/livros').send({
+            titulo: 'Dom Casmurro',
+            paginas: 208,
+            autor_id: 3,
+            editora_id: 2
+        });
+
+        const res = await request(app).get('/editoras/2/livros');
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveLength(2);
+    })
 })
